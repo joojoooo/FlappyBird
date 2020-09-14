@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\Fly.cs" />
-     <Compile Include="Assets\scripts\MoveGround.cs" />
+     <Compile Include="Assets\scripts\GroundMover.cs" />
      <Compile Include="Assets\scripts\MovePipes.cs" />
      <Compile Include="Assets\scripts\PipeSpawner.cs" />
  <Reference Include="UnityEngine.UI">

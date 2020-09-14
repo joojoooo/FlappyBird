@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: cc8dc6c2c3c519047b27baa154cabf1c
-timeCreated: 1599854829
+guid: fbe54f96bc9542545a6b489d7fe22bb5
+timeCreated: 1600111485
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -26,7 +26,7 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -49,12 +49,12 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings:
-  - buildTarget: XBOX360
+  - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
-  - buildTarget: Standalone
+  - buildTarget: XBOX360
     maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50

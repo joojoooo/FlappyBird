@@ -2,7 +2,7 @@
 
 public class MovePipes : MonoBehaviour
 {
-    public float speed = 1.51f;
+    public float speed = 1.66614f;
 
     void Update()
     {

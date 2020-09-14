@@ -2,7 +2,8 @@
 
 public class MoveGround : MonoBehaviour
 {
-    public float speed = 1.51f;
+    public float speed = 1.66614f;
+    public float loopPos = -3.038f;
     private Vector3 startPosition;
 
     void Start()
@@ -12,10 +13,10 @@ public class MoveGround : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.x <= -3.050002)
-        {
-            transform.position = startPosition;
-        }
         transform.position += Vector3.left * speed * Time.deltaTime;
+        if (transform.position.x <= loopPos)
+        {
+            transform.position = startPosition + Vector3.left * speed * Time.deltaTime;
+        }
     }
 }

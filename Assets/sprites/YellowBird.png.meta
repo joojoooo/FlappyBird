@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: 1c21661326073814baab7125d3f04799
-timeCreated: 1599854892
+guid: 090617b9fd93ddf46ba32af83b1e6b2d
+timeCreated: 1600188316
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: YellowBird0
-    21300002: YellowBird1
-    21300004: YellowBird2
-    21300006: Ground
+    21300000: YellowBird_0
+    21300002: YellowBird_1
+    21300004: YellowBird_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +29,7 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
@@ -53,53 +52,71 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings:
-  - buildTarget: XBOX360
+  - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
-  - buildTarget: Standalone
+  - buildTarget: XBOX360
     maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
-    - name: YellowBird0
+    - name: YellowBird_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 18
-        width: 34
-        height: 24
+        x: 0
+        y: 0
+        width: 48
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -19, y: 17}
+        - {x: -24, y: 15}
+        - {x: -24, y: -17}
+        - {x: 24, y: -17}
+        - {x: 24, y: 17}
       tessellationDetail: 0
-    - name: YellowBird1
+    - name: YellowBird_1
       rect:
         serializedVersion: 2
-        x: 62
-        y: 18
-        width: 34
-        height: 24
+        x: 49
+        y: 0
+        width: 48
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -24, y: 17}
+        - {x: -24, y: -10}
+        - {x: -18, y: -17}
+        - {x: 17, y: -17}
+        - {x: 24, y: -14}
+        - {x: 24, y: 17}
       tessellationDetail: 0
-    - name: YellowBird2
+    - name: YellowBird_2
       rect:
         serializedVersion: 2
-        x: 118
-        y: 18
-        width: 34
-        height: 24
+        x: 98
+        y: 0
+        width: 48
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -17, y: 17}
+        - {x: -24, y: 11}
+        - {x: -24, y: -17}
+        - {x: 23, y: -17}
+        - {x: 24, y: -16}
+        - {x: 24, y: 15}
+        - {x: 17, y: 17}
       tessellationDetail: 0
     outline: []
   spritePackingTag: 

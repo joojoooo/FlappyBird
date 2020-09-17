@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fly : MonoBehaviour
 {
-    public float velocity = 3.7f;
+    public float velocity = 3.5f;
     public float sinDivider = 100f;
     public float sinSpeed = 8.1954591f;
     public float downRotSpeed = 100f;
@@ -18,6 +19,10 @@ public class Fly : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip point;
     private AudioClip wing;
+    private AudioClip hit;
+
+    private bool gameOver = false;
+
 
     void Start()
     {
@@ -29,10 +34,26 @@ public class Fly : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         point = Resources.Load<AudioClip>("sounds/sfx_point");
         wing = Resources.Load<AudioClip>("sounds/sfx_wing");
+        hit = Resources.Load<AudioClip>("sounds/sfx_hit");
     }
 
     void Update()
     {
+        if (gameOver == true)
+        {
+            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, 5f * downRotSpeed * Time.deltaTime);
+            if (transform.position.y < -1.8701f)
+            {
+                rb.isKinematic = true;
+                transform.position = new Vector3(transform.position.x, -1.87f, transform.position.z);
+            }
+            if (Input.GetButton("Jump") == true)
+            {
+                RestartGame();
+            }
+            return;
+        }
+
         if (Input.GetButton("Jump") == true)
         {
             if (release == true && lastJump < Time.time)
@@ -61,20 +82,54 @@ public class Fly : MonoBehaviour
         }
     }
 
+    private void Rotate()
+    {
+        if (rb.velocity.y <= -2.5f)
+        {
+            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, -rb.velocity.y * downRotSpeed * Time.deltaTime);
+        }
+        else if (rb.velocity.y > 0f)
+        {
+            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, upRot, rb.velocity.y * upRotSpeed * Time.deltaTime);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         audioSource.PlayOneShot(point);
     }
 
-    private void Rotate()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (rb.velocity.y <= -1)
+        if (col.collider.tag != "Ceiling")
         {
-            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, -rb.velocity.y * downRotSpeed * Time.deltaTime);
+            audioSource.PlayOneShot(hit);
+            EndGame();
         }
-        else if (rb.velocity.y > 0)
+    }
+
+    private void EndGame()
+    {
+        if (gameOver == false)
         {
-            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, upRot, rb.velocity.y * upRotSpeed * Time.deltaTime);
+            gameOver = true;
+            GetComponent<PolygonCollider2D>().enabled = false;
+
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Pipes"))
+            {
+                obj.GetComponent<MovePipes>().enabled = false;
+            }
+            FindObjectOfType<PipeSpawner>().enabled = false;
+            FindObjectOfType<GroundMover>().enabled = false;
+        }
+    }
+
+    private void RestartGame()
+    {
+        if (gameOver == true)
+        {
+            gameOver = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

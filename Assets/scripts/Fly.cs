@@ -8,6 +8,7 @@ public class Fly : MonoBehaviour
     public float sinSpeed = 8.1954591f;
     public float downRotSpeed = 100f;
     public float upRotSpeed = 350f;
+    public GameObject pipeSpawner;
 
     private Rigidbody2D rb;
     private Quaternion downRot;
@@ -22,6 +23,7 @@ public class Fly : MonoBehaviour
     private AudioClip hit;
 
     private bool gameOver = false;
+    private bool started = false;
 
 
     void Start()
@@ -49,7 +51,7 @@ public class Fly : MonoBehaviour
             }
             if (Input.GetButton("Jump") == true)
             {
-                RestartGame();
+                Invoke("RestartGame", 1f);
             }
             return;
         }
@@ -58,7 +60,12 @@ public class Fly : MonoBehaviour
         {
             if (release == true && lastJump < Time.time)
             {
-                rb.isKinematic = false;
+                if (started == false)
+                {
+                    started = true;
+                    pipeSpawner.SetActive(true);
+                    rb.isKinematic = false;
+                }
                 release = false;
                 audioSource.PlayOneShot(wing);
                 lastJump = Time.time + 0.100f;
@@ -71,7 +78,7 @@ public class Fly : MonoBehaviour
         }
 
 
-        if (rb.isKinematic == true)
+        if (started == false)
         {
             transform.position += Vector3.up * Mathf.Sin(sinTime) / sinDivider;
             sinTime += Time.deltaTime * sinSpeed;
@@ -96,12 +103,20 @@ public class Fly : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        audioSource.PlayOneShot(point);
+        if (col.tag == "Safe")
+        {
+            audioSource.PlayOneShot(hit);
+            EndGame();
+        }
+        else
+        {
+            audioSource.PlayOneShot(point);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.tag != "Ceiling")
+        if (col.collider.tag == "Die")
         {
             audioSource.PlayOneShot(hit);
             EndGame();
@@ -115,11 +130,11 @@ public class Fly : MonoBehaviour
             gameOver = true;
             GetComponent<PolygonCollider2D>().enabled = false;
 
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Pipes"))
+            foreach (MovePipes obj in FindObjectsOfType<MovePipes>())
             {
-                obj.GetComponent<MovePipes>().enabled = false;
+                obj.enabled = false;
             }
-            FindObjectOfType<PipeSpawner>().enabled = false;
+            pipeSpawner.SetActive(false);
             FindObjectOfType<GroundMover>().enabled = false;
         }
     }
@@ -128,7 +143,6 @@ public class Fly : MonoBehaviour
     {
         if (gameOver == true)
         {
-            gameOver = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

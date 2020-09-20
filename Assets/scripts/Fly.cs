@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Fly : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Fly : MonoBehaviour
     public float downRotSpeed = 100f;
     public float upRotSpeed = 350f;
     public GameObject pipeSpawner;
+    public Text scoreText;
 
     private Rigidbody2D rb;
     private Quaternion downRot;
@@ -24,6 +26,7 @@ public class Fly : MonoBehaviour
 
     private bool gameOver = false;
     private bool started = false;
+    private int score = 0;
 
 
     void Start()
@@ -103,6 +106,7 @@ public class Fly : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        //Ground is the only trigger with the "Safe" tag
         if (col.tag == "Safe")
         {
             audioSource.PlayOneShot(hit);
@@ -111,6 +115,8 @@ public class Fly : MonoBehaviour
         else
         {
             audioSource.PlayOneShot(point);
+            score++;
+            scoreText.text = score.ToString("0");
         }
     }
 

@@ -11,6 +11,8 @@ public class Fly : MonoBehaviour
     public float upRotSpeed = 350f;
     public GameObject pipeSpawner;
     public Text scoreText;
+    public GameObject canvas;
+    public GameObject flash;
 
     private Rigidbody2D rb;
     private Quaternion downRot;
@@ -135,6 +137,8 @@ public class Fly : MonoBehaviour
         {
             gameOver = true;
             GetComponent<PolygonCollider2D>().enabled = false;
+            GameObject flashInstance = Instantiate(flash);
+            flashInstance.transform.SetParent(canvas.transform, false);
 
             foreach (MovePipes obj in FindObjectsOfType<MovePipes>())
             {

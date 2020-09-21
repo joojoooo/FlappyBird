@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Fly : MonoBehaviour
 {
-    public float velocity = 3.5f;
+    public float velocity = 3.3f;
     public float sinDivider = 100f;
     public float sinSpeed = 8.1954591f;
     public float downRotSpeed = 100f;
@@ -25,7 +25,9 @@ public class Fly : MonoBehaviour
     private AudioClip point;
     private AudioClip wing;
     private AudioClip hit;
-
+    private AudioClip die;
+    private bool playDieSound = false;
+    private float gameOverTime;
     private bool gameOver = false;
     private bool started = false;
     private int score = 0;
@@ -42,17 +44,23 @@ public class Fly : MonoBehaviour
         point = Resources.Load<AudioClip>("sounds/sfx_point");
         wing = Resources.Load<AudioClip>("sounds/sfx_wing");
         hit = Resources.Load<AudioClip>("sounds/sfx_hit");
+        die = Resources.Load<AudioClip>("sounds/sfx_die");
     }
 
     void Update()
     {
         if (gameOver == true)
         {
-            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, 5f * downRotSpeed * Time.deltaTime);
+            Rotate(true);
             if (transform.position.y < -1.8701f)
             {
                 rb.isKinematic = true;
                 transform.position = new Vector3(transform.position.x, -1.87f, transform.position.z);
+            }
+            if (playDieSound == true && Time.time > gameOverTime + 0.4f)
+            {
+                audioSource.PlayOneShot(die);
+                playDieSound = false;
             }
             if (Input.GetButton("Jump") == true)
             {
@@ -73,7 +81,7 @@ public class Fly : MonoBehaviour
                 }
                 release = false;
                 audioSource.PlayOneShot(wing);
-                lastJump = Time.time + 0.100f;
+                lastJump = Time.time + 0.050f;
                 rb.velocity = Vector2.up * velocity;
             }
         }
@@ -94,7 +102,7 @@ public class Fly : MonoBehaviour
         }
     }
 
-    private void Rotate()
+    private void Rotate(bool dead = false)
     {
         if (rb.velocity.y <= -2.5f)
         {
@@ -104,29 +112,24 @@ public class Fly : MonoBehaviour
         {
             rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, upRot, rb.velocity.y * upRotSpeed * Time.deltaTime);
         }
+        else if (dead)
+        {
+            rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, 4 * downRotSpeed * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //Ground is the only trigger with the "Safe" tag
-        if (col.tag == "Safe")
-        {
-            audioSource.PlayOneShot(hit);
-            EndGame();
-        }
-        else
+        if (col.tag == "Point")
         {
             audioSource.PlayOneShot(point);
             score++;
             scoreText.text = score.ToString("0");
         }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.collider.tag == "Die")
+        else
         {
-            audioSource.PlayOneShot(hit);
+            if (col.tag == "Pipe")
+                playDieSound = true;
             EndGame();
         }
     }
@@ -136,7 +139,9 @@ public class Fly : MonoBehaviour
         if (gameOver == false)
         {
             gameOver = true;
+            gameOverTime = Time.time;
             GetComponent<PolygonCollider2D>().enabled = false;
+            audioSource.PlayOneShot(hit);
             GameObject flashInstance = Instantiate(flash);
             flashInstance.transform.SetParent(canvas.transform, false);
 

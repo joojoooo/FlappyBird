@@ -13,11 +13,12 @@ public class Flash : MonoBehaviour
     {
         img = GetComponent<Image>();
         white = new Color(1f, 1f, 1f, 0.9f);
+        clear = new Color(1f, 1f, 1f, 0f);
     }
 
     void Update()
     {
-        img.color = Color.Lerp(white, Color.clear, t);
+        img.color = Color.Lerp(white, clear, t);
         t += Time.deltaTime / speed;
         if (t >= 1f)
         {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Fly : MonoBehaviour
 {
-    public float velocity = 3.3f;
+    public float velocity = 4f;
     public float sinDivider = 100f;
     public float sinSpeed = 8.1954591f;
     public float downRotSpeed = 100f;
@@ -140,7 +140,7 @@ public class Fly : MonoBehaviour
         {
             gameOver = true;
             gameOverTime = Time.time;
-            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
             audioSource.PlayOneShot(hit);
             GameObject flashInstance = Instantiate(flash);
             flashInstance.transform.SetParent(canvas.transform, false);

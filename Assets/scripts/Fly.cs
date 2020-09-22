@@ -13,6 +13,8 @@ public class Fly : MonoBehaviour
     public Text scoreText;
     public GameObject canvas;
     public GameObject flash;
+    public Animator animator;
+    private bool flying = false;
 
     private Rigidbody2D rb;
     private Quaternion downRot;
@@ -78,6 +80,7 @@ public class Fly : MonoBehaviour
                     started = true;
                     pipeSpawner.SetActive(true);
                     rb.isKinematic = false;
+                    setFlying(true);
                 }
                 release = false;
                 audioSource.PlayOneShot(wing);
@@ -106,14 +109,17 @@ public class Fly : MonoBehaviour
     {
         if (rb.velocity.y <= -2.5f)
         {
+            setFlying(false);
             rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, -rb.velocity.y * downRotSpeed * Time.deltaTime);
         }
         else if (rb.velocity.y > 0f)
         {
+            setFlying(true);
             rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, upRot, rb.velocity.y * upRotSpeed * Time.deltaTime);
         }
         else if (dead)
         {
+            setFlying(false);
             rb.transform.rotation = Quaternion.RotateTowards(rb.transform.rotation, downRot, 4 * downRotSpeed * Time.deltaTime);
         }
     }
@@ -159,6 +165,15 @@ public class Fly : MonoBehaviour
         if (gameOver == true)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    private void setFlying(bool nflying)
+    {
+        if (nflying != flying)
+        {
+            flying = nflying;
+            animator.SetBool("Flying", flying);
         }
     }
 }

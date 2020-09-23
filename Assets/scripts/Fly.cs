@@ -9,6 +9,7 @@ public class Fly : MonoBehaviour
     public float sinSpeed = 8.1954591f;
     public float downRotSpeed = 100f;
     public float upRotSpeed = 350f;
+    public GameObject getReady;
     public GameObject pipeSpawner;
     public Text scoreText;
     public GameObject canvas;
@@ -64,9 +65,10 @@ public class Fly : MonoBehaviour
                 audioSource.PlayOneShot(die);
                 playDieSound = false;
             }
-            if (Input.GetButton("Jump") == true)
+            if (Input.GetButton("Jump") == true && release == true && gameOverTime + 0.250f < Time.time)
             {
                 Invoke("RestartGame", 1f);
+                release = false;
             }
             return;
         }
@@ -81,6 +83,7 @@ public class Fly : MonoBehaviour
                     pipeSpawner.SetActive(true);
                     rb.isKinematic = false;
                     setFlying(true);
+                    getReady.GetComponent<SpriteFade>().StartFade();
                 }
                 release = false;
                 audioSource.PlayOneShot(wing);
@@ -145,6 +148,7 @@ public class Fly : MonoBehaviour
         if (gameOver == false)
         {
             gameOver = true;
+            release = true;
             gameOverTime = Time.time;
             GetComponent<CircleCollider2D>().enabled = false;
             audioSource.PlayOneShot(hit);
@@ -161,6 +165,16 @@ public class Fly : MonoBehaviour
     }
 
     private void RestartGame()
+    {
+        if (gameOver == true)
+        {
+            BlackFade obj = FindObjectOfType<BlackFade>();
+            if (obj == null) RestartGameNow();
+            else obj.FadeRestart();
+        }
+    }
+
+    private void RestartGameNow()
     {
         if (gameOver == true)
         {

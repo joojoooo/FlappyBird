@@ -45,11 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\BlackFade.cs" />
      <Compile Include="Assets\scripts\Flash.cs" />
      <Compile Include="Assets\scripts\Fly.cs" />
      <Compile Include="Assets\scripts\GroundMover.cs" />
      <Compile Include="Assets\scripts\MovePipes.cs" />
      <Compile Include="Assets\scripts\PipeSpawner.cs" />
+     <Compile Include="Assets\scripts\SpriteFade.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 5.4.0b11/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

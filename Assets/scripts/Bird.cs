@@ -4,8 +4,9 @@ public class Bird : MonoBehaviour
 {
     private bool startedPlaying = false;
     private bool flying = false;
-    private bool jumpBtnReleased = true;
-    private float jumpTime = -1f;
+    private string jumpButtonName;
+    private bool jumpBtnReleased = false;
+    private float BtnPressTime = -1f;
     private bool deadByPipe = false;
     private bool dead = false;
     private float deathTime = 0f;
@@ -29,6 +30,7 @@ public class Bird : MonoBehaviour
 
     public Animator animator;
     public int birdNumber = 0;
+    public int controllerNumber = 0;
 
 
     void Start()
@@ -39,20 +41,25 @@ public class Bird : MonoBehaviour
         hitAudio = Resources.Load<AudioClip>("sounds/sfx_hit");
         dieAudio = Resources.Load<AudioClip>("sounds/sfx_die");
 
+        if (birdNumber == 1) transform.position = new Vector3(-1.6f, 0f, 0f);
+        else if (birdNumber == 2) transform.position = new Vector3(1.6f, 0f, 0f);
+        else if (birdNumber == 3) transform.position = new Vector3(4.8f, 0f, 0f);
         startPos = transform.position;
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
         downRot = Quaternion.Euler(0f, 0f, -90f);
         upRot = Quaternion.Euler(0f, 0f, 20f);
         gameManager = FindObjectOfType<GameManager>();
+        jumpButtonName = "Jump" + controllerNumber.ToString();
+        BtnPressTime = Time.time + 0.2f;
     }
 
     public void ResetBird()
     {
         startedPlaying = false;
         flying = false;
-        jumpBtnReleased = true;
-        jumpTime = -1f;
+        jumpBtnReleased = false;
+        BtnPressTime = Time.time + 0.2f;
         deadByPipe = false;
         dead = false;
         deathTime = 0f;
@@ -79,29 +86,36 @@ public class Bird : MonoBehaviour
                 audioSource.PlayOneShot(dieAudio);
                 deadByPipe = false;
             }
-            if (Input.GetButton("Jump" + birdNumber.ToString()) == true && jumpBtnReleased == true && deathTime + 0.3f < Time.time)
+            if (Input.GetButton(jumpButtonName) == true && jumpBtnReleased == true && deathTime + 0.3f < Time.time && BtnPressTime < Time.time)
             {
                 gameManager.RestartGameRequest(birdNumber);
                 jumpBtnReleased = false;
+                BtnPressTime = Time.time + 0.5f;
+            }
+            else
+            {
+                jumpBtnReleased = true;
             }
             return;
         }
 
-        if (Input.GetButton("Jump" + birdNumber.ToString()) == true)
+        if (Input.GetButton(jumpButtonName) == true)
         {
-            if (jumpBtnReleased == true && jumpTime < Time.time)
+            if (jumpBtnReleased == true && BtnPressTime < Time.time)
             {
                 if (startedPlaying == false)
                 {
-                    startedPlaying = true;
-                    rb.isKinematic = false;
-                    setFlying(true);
-                    gameManager.StartGame(birdNumber);
+                    startedPlaying = gameManager.StartGame(birdNumber);
+                    rb.isKinematic = !startedPlaying;
+                    setFlying(startedPlaying);
                 }
-                jumpBtnReleased = false;
-                audioSource.PlayOneShot(wingAudio);
-                jumpTime = Time.time + 0.050f;
-                rb.velocity = Vector2.up * velocity;
+                else
+                {
+                    jumpBtnReleased = false;
+                    audioSource.PlayOneShot(wingAudio);
+                    BtnPressTime = Time.time + 0.050f;
+                    rb.velocity = Vector2.up * velocity;
+                }
             }
         }
         else { jumpBtnReleased = true; }
@@ -136,6 +150,7 @@ public class Bird : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (!startedPlaying) return;
         if (col.tag == "Point")
         {
             audioSource.PlayOneShot(pointAudio);
@@ -155,7 +170,6 @@ public class Bird : MonoBehaviour
         if (dead) return;
         dead = true;
 
-        jumpBtnReleased = true;
         deathTime = Time.time;
         GetComponent<CircleCollider2D>().enabled = false;
         audioSource.PlayOneShot(hitAudio);

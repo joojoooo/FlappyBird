@@ -2,10 +2,10 @@
 
 public class PipeSpawner : MonoBehaviour
 {
-    public float interval = 1.316666f;
     public GameObject pipe;
-    public float maxHeight = 1.75f;
-    public float minHeight = -0.71f;
+    private float interval = 1.316666f;
+    private float maxHeight = 1.75f;
+    private float minHeight = -0.71f;
 
     private float time = 0f;
 

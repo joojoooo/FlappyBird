@@ -14,6 +14,16 @@ public class SpriteFade : MonoBehaviour
         clear = new Color(1f, 1f, 1f, 0f);
     }
 
+    void OnDisable()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().color = white;
+        }
+        t = 0f;
+        fade = false;
+    }
+
     void Update()
     {
         if (fade == false)
@@ -24,10 +34,8 @@ public class SpriteFade : MonoBehaviour
             child.GetComponent<SpriteRenderer>().color = Color.Lerp(white, clear, t);
         }
         t += Time.deltaTime / fadeSpeed;
-        if (t >= 1f)
-        {
-            Destroy(gameObject);
-        }
+        if (t >= 1f) gameObject.SetActive(false);
+
     }
 
     public void StartFade()

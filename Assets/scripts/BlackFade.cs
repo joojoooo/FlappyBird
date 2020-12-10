@@ -8,55 +8,61 @@ public class BlackFade : MonoBehaviour
     private Color clear;
     private Color black;
     private float t = 0f;
-    private float fadeSpeed = 0.25f;
-    private bool restart = false;
-    private bool done = false;
-
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+    private float fadeSpeed = 0.2f;
+    private bool fadeIn = true;
+    private bool fadeOut = true;
+    private bool fadeInDone = false;
+    private bool hang = false;
+    public GameManager gameManager;
 
     void Start()
     {
-        img = GetComponentInChildren<Image>();
+        img = GetComponent<Image>();
         black = new Color(0f, 0f, 0f, 1f);
         clear = new Color(0f, 0f, 0f, 0f);
-        Setup();
-        SceneManager.LoadScene(1);
-    }
-
-    void Setup()
-    {
-        t = 0f;
-        restart = false;
-        done = false;
-        img.enabled = true;
     }
 
     void Update()
     {
-        if (done)
-            return;
-
-        if (restart) { img.color = Color.Lerp(clear, black, t); }
-        else { img.color = Color.Lerp(black, clear, t); }
+        if (hang) return;
+        if (fadeIn && !fadeInDone) { img.color = Color.Lerp(clear, black, t); }
+        else if (fadeOut) { img.color = Color.Lerp(black, clear, t); }
         t += Time.deltaTime / fadeSpeed;
         if (t >= 1f)
         {
-            img.enabled = false;
-            done = true;
-            if (restart)
+            if ((fadeIn && !fadeOut) || (!fadeIn && fadeOut) || fadeInDone)
             {
-                SceneManager.LoadScene(1);
-                Setup();
+                if (fadeIn && !fadeOut)
+                {
+                    hang = true;
+                    gameManager.FadeInDone(this);
+                    return;
+                }
+                Destroy(gameObject);
+                return;
             }
+            fadeInDone = true;
+            t = 0f;
         }
     }
 
-    public void FadeRestart()
+    public void FadeIn(float fadeSpeed = 0.2f)
     {
-        Setup();
-        restart = true;
+        this.fadeSpeed = fadeSpeed;
+        fadeIn = true;
+        fadeOut = false;
+        fadeInDone = false;
+        t = 0f;
+        hang = false;
+    }
+
+    public void FadeOut(float fadeSpeed = 0.2f)
+    {
+        this.fadeSpeed = fadeSpeed;
+        fadeIn = false;
+        fadeOut = true;
+        fadeInDone = true;
+        t = 0f;
+        hang = false;
     }
 }

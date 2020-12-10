@@ -45,11 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\Bird.cs" />
      <Compile Include="Assets\scripts\BlackFade.cs" />
      <Compile Include="Assets\scripts\Flash.cs" />
-     <Compile Include="Assets\scripts\Fly.cs" />
-     <Compile Include="Assets\scripts\GroundMover.cs" />
-     <Compile Include="Assets\scripts\MovePipes.cs" />
+     <Compile Include="Assets\scripts\GameManager.cs" />
+     <Compile Include="Assets\scripts\GroundMove.cs" />
+     <Compile Include="Assets\scripts\PipeMove.cs" />
      <Compile Include="Assets\scripts\PipeSpawner.cs" />
      <Compile Include="Assets\scripts\SpriteFade.cs" />
  <Reference Include="UnityEngine.UI">

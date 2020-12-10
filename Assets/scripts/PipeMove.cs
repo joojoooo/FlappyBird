@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class MovePipes : MonoBehaviour
+public class PipeMove : MonoBehaviour
 {
-    public float speed = 1.66614f;
+    private float speed = 1.66614f;
 
     void Update()
     {
@@ -11,5 +11,10 @@ public class MovePipes : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void DestroyPipe()
+    {
+        Destroy(gameObject);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class GroundMover : MonoBehaviour
+public class GroundMove : MonoBehaviour
 {
-    public float speed = 1.66614f;
+    private float speed = 1.66614f;
 
     void Update()
     {

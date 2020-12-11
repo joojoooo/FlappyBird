@@ -69,6 +69,7 @@ public class Bird : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         rb.velocity = Vector2.zero;
         GetComponent<CircleCollider2D>().enabled = true;
+        animator.SetTrigger("Reset");
     }
 
     void Update()
@@ -182,6 +183,7 @@ public class Bird : MonoBehaviour
         {
             flying = nflying;
             animator.SetBool("Flying", flying);
+            animator.ResetTrigger("Reset");
         }
     }
 }

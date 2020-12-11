@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour
 {
     enum GameState { Menu, Playing, GameOver, Fade };
 
-    public PipeSpawner pipeSpawner;
+    private PipeSpawner pipeSpawner;
     public GameObject getReady;
     public GameObject canvas;
     public GameObject flash;
     public GameObject blackFade;
     public Text scoreText;
-    public GameObject bird;
+    public GameObject[] birdPrefabs;
     private Bird[] birds;
     private int birdCnt = 0;
     private int birdsAliveCnt = 0;
@@ -33,16 +33,15 @@ public class GameManager : MonoBehaviour
     {
         if (birdCnt < 4 && gameState == GameState.Menu)
         {
-            if (controllerBirdMap[1] == 0 && Input.GetButton("Jump1") == true) { controllerBirdMap[1] = birdCnt; SpawnBird(1); }
-            else if (controllerBirdMap[2] == 0 && Input.GetButton("Jump2") == true) { controllerBirdMap[2] = birdCnt; SpawnBird(2); }
-            else if (controllerBirdMap[3] == 0 && Input.GetButton("Jump3") == true) { controllerBirdMap[3] = birdCnt; SpawnBird(3); }
+            if (controllerBirdMap[1] == 0 && Input.GetButton("Jump1") == true) { controllerBirdMap[1] = birdCnt; SpawnBird(1, 1); }
+            else if (controllerBirdMap[2] == 0 && Input.GetButton("Jump2") == true) { controllerBirdMap[2] = birdCnt; SpawnBird(2, 1); }
+            else if (controllerBirdMap[3] == 0 && Input.GetButton("Jump3") == true) { controllerBirdMap[3] = birdCnt; SpawnBird(3, 1); }
         }
     }
 
     private void SpawnBird(int controllerNumber = 0, int type = 0)
     {
-        GameObject birdInstance = Instantiate(bird);
-        birds[birdCnt] = birdInstance.GetComponent<Bird>();
+        birds[birdCnt] = Instantiate(birdPrefabs[type]).GetComponent<Bird>();
         birds[birdCnt].birdNumber = birdCnt;
         birds[birdCnt].controllerNumber = controllerNumber;
         birdCnt++;

@@ -1,0 +1,5 @@
+ground Y: -2.815
+atlas scale: 1.40625
+
+atlas bird W, H: 34, 24
+scaled bird W, H: 48, 34

@@ -13,6 +13,10 @@ I did this just for fun and never thought anyone would actually use it until I r
 
 I later added multiplayer support, not sure if the version that got spread has it, connect a second controller and press A to try it.
 
+This port was made using Unity with the Xbox 360 plugin.
+Sprites are straight from the original Android and Amazon Fire versions of the game
+Tried my best to match the original gameplay gravity, jumps, collision boxes, spacing between pipes, etc
+
 ## :clapper: Video Review ##
 
 https://youtu.be/J1_S5z4gUoo
@@ -24,3 +28,6 @@ https://youtu.be/J1_S5z4gUoo
 - Download the XEX from [releases](https://github.com/joojoooo/FlappyBird/releases)
 - Transfer the XEX and Media folder to your Xbox
 - Launch as any other game (modded 360 needed)
+- Optionally add the custom boxart to Aurora using [AuroraAssetEditor](https://github.com/XboxUnity/AuroraAssetEditor/releases/latest)
+
+<img src="Assets/Aurora/boxart.png" width="40%">

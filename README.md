@@ -6,12 +6,19 @@
 
 ## :dart: About ##
 
-I first posted about this on reddit: https://www.reddit.com/r/360hacks/comments/k6vv4i/flappybird_on_xbox_360
-It was shared to 1 random person who asked for it privately then someone told me it got added to a stealth server homebrew apps store, not sure which, and from there it spread I guess.
+I did this just for fun/learning and never thought anyone would actually use it until I randomly got recommended the YouTube review and recognized it was my game :D !!!</br></br>
+I first posted about it on reddit:
+- https://www.reddit.com/r/360hacks/comments/k6vv4i/flappybird_on_xbox_360
+- https://www.reddit.com/r/360hacks/comments/t5s8h8/flappy_bird_xbox_360
+
+It was only ever shared to 1 random person who asked for it privately. After a while someone told me it got added to a stealth server's homebrew apps store, not sure which, and from there it spread I guess.
 I got nothing from it, not even recognition. I wasn't allowed to post the code or XEX on the subreddit, that's why I never made it public.
-I did this just for fun and never thought anyone would actually use it until I randomly found the YouTube review and recognized it was my game :D !!!
 
 I later added multiplayer support, not sure if the version that got spread has it, connect a second controller and press A to try it.
+
+<p align="center">
+  <img src="unity_screenshot.png" width="70%">
+</p>
 
 This port was made using Unity with the Xbox 360 plugin.
 Sprites are straight from the original Android and Amazon Fire versions of the game

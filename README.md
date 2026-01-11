@@ -26,9 +26,9 @@ Tried my best to match the original gameplay gravity, jumps, collision boxes, sp
 
 ## :clapper: Video Review ##
 
-https://youtu.be/J1_S5z4gUoo
+https://youtu.be/XI45bFBhuLM&t=888
 
-[![Click to watch video](https://img.youtube.com/vi/XI45bFBhuLM/0.jpg)](https://www.youtube.com/watch?v=XI45bFBhuLM&t=888)
+[![Click to watch video](https://img.youtube.com/vi/XI45bFBhuLM/0.jpg)](https://youtu.be/XI45bFBhuLM&t=888)
 
 ## :checkered_flag: Installation ##
 
